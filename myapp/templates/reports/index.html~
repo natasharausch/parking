@@ -1,0 +1,9 @@
+<h1>Parking tickets</h1>
+
+<ul>{% for object in locations %}
+<li><a href="{{ object.get_absolute_url }}">{{ object.name }} | {{ object.tickets__count }}</a></li>
+{% endfor %}</ul>
+
+<ul>{% for object in violations %}
+<li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
+{% endfor %}</ul>

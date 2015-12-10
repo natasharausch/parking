@@ -1,0 +1,11 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+<h1>{{ violation }}</h1>
+
+<h3>{{ tickets|length }} bad people parked here</h3>
+
+<ul>{% for object in tickets %}
+<li>{{ object.plate }} on {{ object.ticket_date }} at {{ object.location }}</li>
+{% endfor %}</ul>
+{% endblock %}

@@ -1,0 +1,7 @@
+<h1>{{ location }}</h1>
+
+<h3>{{ tickets|len }} bad people parked here</h3>
+
+<ul>{% for object in tickets %}
+<li>{{ object.plate }} on {{ object.ticket_date }} for {{ object.violation }}</li>
+{% endfor %}</ul>

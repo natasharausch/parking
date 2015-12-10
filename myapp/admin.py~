@@ -1,0 +1,26 @@
+from django.contrib import admin
+
+import os, sys, string, csv, datetime, time, django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "parking.settings")
+
+from django.conf import settings
+
+from myapp.models import models.py
+
+from django.template.defaultfilters import slugify, urlize
+
+django.setup()
+
+reader = csv.reader(open("citations.csv", "rU"), dialect=csv.excel)
+reader.next()
+for row in reader:
+    citno = row[0]
+    dateparseexample = time.strptime(row[1], "%m/%d/%Y %H:%M")
+    violation = int(row[2])
+    location = float(row[3])
+    license = float(row[4])
+    dateexample = datetime.datetime(dateparseexample.tm_year, dateparseexample.tm_mon, dateparseexample.tm_mday, dateparseexample.tm_hour, dateparseexample.tm_min)
+    modnam, modnamcreated = ModelName.objects.get_or_create(name=row[4], attribute=row[5])
+
+

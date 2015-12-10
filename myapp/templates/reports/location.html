@@ -1,0 +1,70 @@
+{% extends "reports/base.html" %}
+
+{% block scripts %}
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Violation", "Count", { role: "style" } ],
+          {% for object in tickets %}
+          
+        ["{{ object.violation__name }}", {{ object.id__count }}, "#b87333"],
+          {% endfor %}
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Violations",
+        width: '100%',
+        height: '600px',
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+{% endblock %}
+    
+{% block content %}
+<div class="jumbotron">
+<div class= "row">
+    <div class="col-md-12">
+<h1>{{ location }}</h1>
+
+<h3>{{ total }} tickets issued at {{ location }}</h3>
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Location</th>
+                  <th>Tickets</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for object in tickets %}<tr>
+                  <td><a href="{{ object.get_absolute_url }}">{{ object.violation__name }}</a></td>
+                  <td>{{ object.id__count }}</td>
+                </tr>{% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+   <div class= "row">
+    <div class="col-md-12"> 
+    <div id="columnchart_values" style="width: 100%; height: 500px;"></div>
+       </div>
+    </div>
+
+{% endblock %}

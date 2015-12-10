@@ -1,0 +1,44 @@
+{% extends "reports/base.html" %}
+
+
+{% block scripts %}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+{% endblock %}
+
+{% block styles %}
+<style>div#index.jumbotron {position: relative;
+background: #fff url("/static/img/parking2.jpg") repeat scroll center center / cover;
+width: 100% !important;
+height: 100%;
+background-size: cover;
+overflow: hidden;}</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron" id="index">
+<h1 style="color:white;">Parking tickets</h1>
+    <p style="color:white;">From November 2013 to February 2015, the university distributed 52,708 tickets, with most of the violations being for parking at an expired meter or not displaying a valid permit.</p>
+
+<p style="color:white;">Students say parking permits are expensive -- $405 for a standard permit for a university parking lot -- and there aren’t enough spaces. The director of parking services says, with 17,000 garage and surface lot spaces, there is plenty of room, and that students need to factor in the cost of parking before arriving on campus.</p>
+</div>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Location</th>
+                  <th>Tickets</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for object in locations %}<tr>
+                  <td><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></td>
+                  <td>{{ object.tickets__count }}</td>
+                </tr>{% endfor %}
+              </tbody>
+            </table>
+          </div>
+{% endblock %}
